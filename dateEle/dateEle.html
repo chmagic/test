@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>民事审判助手-日期天数计算</title>
+
+</head>
+
+<body>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">起始日期</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" id="startDate" placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">截止日期</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" id="endDate" placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+        //结果
+        <div class="layui-form-item">
+            <label class="layui-form-label">相距天数</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" id="txtD" placeholder="0" disabled>
+            </div>
+            <label class="layui-form-label">相距年月日</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" id="txtYMD" placeholder="0" disabled>
+            </div>
+            <label class="layui-form-label">相距年日</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" id="txtMD" placeholder="0" disabled>
+            </div>
+            <label class="layui-form-label">相距月日</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" id="txtMD" placeholder="0" disabled>
+            </div>
+        </div>
+    </form>
+
+</body>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+<script>
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  
+  //常规用法
+  laydate.render({
+    elem: '#startDate'
+  });
+  laydate.render({
+    elem: '#endDate'
+  });
+  
+  
+  
+  //同时绑定多个
+  lay('.test-item').each(function(){
+    laydate.render({
+      elem: this
+      ,trigger: 'click'
+    });
+  });
+  
+  //初始赋值
+  laydate.render({
+    elem: '#test19'
+    ,value: '1989-10-14'
+    ,isInitValue: true
+  });
+  
+  //选中后的回调
+  laydate.render({
+    elem: '#test20'
+    ,done: function(value, date){
+      layer.alert('你选择的日期是：' + value + '<br>获得的对象是' + JSON.stringify(date));
+    }
+  });
+  
+  //日期切换的回调
+  laydate.render({
+    elem: '#test21'
+    ,change: function(value, date){
+      layer.msg('你选择的日期是：' + value + '<br><br>获得的对象是' + JSON.stringify(date));
+    }
+  });
+  //不出现底部栏
+  laydate.render({
+    elem: '#test22'
+    ,showBottom: false
+  });
+  
+  //只出现确定按钮
+  laydate.render({
+    elem: '#test23'
+    ,btns: ['confirm']
+  });
+  
+  //自定义事件
+  laydate.render({
+    elem: '#test24'
+    ,trigger: 'mousedown'
+  });
+  
+  //点我触发
+  laydate.render({
+    elem: '#test25'
+    ,eventElem: '#test25-1'
+    ,trigger: 'click'
+  });
+  
+  //双击我触发
+  lay('#test26-1').on('dblclick', function(){
+    laydate.render({
+      elem: '#test26'
+      ,show: true
+      ,closeStop: '#test26-1'
+    });
+  });
+  
+  //日期只读
+  laydate.render({
+    elem: '#test27'
+    ,trigger: 'click'
+  });
+  
+  //非input元素
+  laydate.render({
+    elem: '#test28'
+  });
+  
+  //墨绿主题
+  laydate.render({
+    elem: '#test29'
+    ,theme: 'molv'
+  });
+  
+  //自定义颜色
+  laydate.render({
+    elem: '#test30'
+    ,theme: '#393D49'
+  });
+  
+  //格子主题
+  laydate.render({
+    elem: '#test31'
+    ,theme: 'grid'
+  });
+  
+  
+});
+</script>
+
+</html>
