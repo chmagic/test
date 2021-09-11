@@ -6,36 +6,106 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../node_modules/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
     <title>诉讼费用计算</title>
 </head>
 
 <body>
-    <p>dsfas</p>
-    <div id="ety"></div>
-    <form class="layui-form" action="">
-        
-        <div class="layui-form-item">
-            <label class="layui-form-label"><small>诉讼标的</small></label>
-            <div class="layui-input-block">
-                <input type="text" class="layui-input" id="startDate" placeholder="0.00" >
+    <!-- 导航栏开始 -->
+
+      <ul class="layui-nav">
+        <li class="layui-nav-item layui-this"><a href="">选中</a></li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">常规</a>
+        </li>
+        <li class="layui-nav-item"><a href="">导航</a></li>
+  
+      </ul>
+    <!-- 导航栏结束 -->
+    <br>
+    <div id="app">
+        <form class="layui layui-form-pane" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><small>诉讼标的</small></label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" placeholder="0" v-model="calObj" v-on:keydown="calCost">
+                </div>
+                <input type="button" class="layui-btn" value="计算" v-on:click="calCost" />
             </div>
-        </div>
-        <label class="layui-form-label"><small>财产案件</small></label>
-        <div class="layui-input-block">
-            <input type="text" class="layui-input" id="startDate" placeholder="0.00" disabled>
-            <input type="button" class="layui-btn layui-btn-normal layui-btn-sm" value="减半" />
-            <input type="button" class="layui-btn layui-btn-normal layui-btn-sm" value="复制" />
-        </div>
-        <label class="layui-form-label"><small>离婚案件</small></label>
-        <div class="layui-input-block">
-            <input type="text" class="layui-input" id="startDate" placeholder="0.00" disabled>
-        </div>
-        <label class="layui-form-label"><small>财产案件</small></label>
-        <div class="layui-input-block">
-            <input type="text" class="layui-input" id="startDate" placeholder="0.00" disabled>
-        </div>
+            <hr class="layui-border-green">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><small>财产案件</small></label>
+                <div class="layui-input-inline">
+                    <input type="text" disabled class="layui-input" v-model="ysccvalue">
+                </div>
+                <input type="button" class="layui-btn" value="减半" />
+                <input type="button" class="layui-btn " value="复制" />
+
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><small>离婚案件</small></label>
+                <div class="layui-input-inline">
+                  <input type="text" disabled  class="layui-input" v-model="ysccvalue">
+                  </div>
+                  <input type="button" class="layui-btn" value="减半" />
+                  <input type="button" class="layui-btn" value="复制" />
+                
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label"><small>人格侵权</small></label>
+                <div class="layui-input-inline">
+                  <input type="text" disabled  class="layui-input" v-model="ysccvalue">
+                  </div>
+                  <input type="button" class="layui-btn" value="减半" />
+                  <input type="button" class="layui-btn" value="复制" />
+                
+              </div>
+            <hr class="layui-border-green">
+
     </div>
     </form>
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                calObj: 0,
+                ysccvalue: 0
+            },
+            methods: {
+                yscc: function (ysssbd) {
+                    console.log(ysssbd)
+                    if (ysssbd > 20000000) { return (ysssbd * 0.005 + 41800).toFixed(2); }
+                    else if (ysssbd > 10000000 && ysssbd <= 20000000) { return (ysssbd * 0.006 + 21800).toFixed(2); }
+                    else if (ysssbd > 5000000 && ysssbd <= 10000000) { return (ysssbd * 0.007 + 11800).toFixed(2); }
+                    else if (ysssbd > 2000000 && ysssbd <= 5000000) { return (ysssbd * 0.008 + 6800).toFixed(2); }
+                    else if (ysssbd > 1000000 && ysssbd <= 2000000) { return (ysssbd * 0.009 + 4800).toFixed(2); }
+                    else if (ysssbd > 500000 && ysssbd <= 1000000) { return (ysssbd * 0.01 + 3800).toFixed(2); }
+                    else if (ysssbd > 200000 && ysssbd <= 500000) { return (ysssbd * 0.015 + 1300).toFixed(2); }
+                    else if (ysssbd > 100000 && ysssbd <= 200000) { return (ysssbd * 0.02 + 300).toFixed(2); }
+                    else if (ysssbd > 10000 && ysssbd <= 100000) { return (ysssbd * 0.025 - 200).toFixed(2); }
+                    else { return 50; }
+                },
+                calCost: function () {
+                    this.ysccvalue = this.yscc(this.calObj)
+                }
+
+            },
+        })
+    </script>
+    <script src="../layui/layui.js" charset="utf-8"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+    <script>
+    layui.use('element', function(){
+      var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+      
+      //监听导航点击
+      element.on('nav(demo)', function(elem){
+        //console.log(elem)
+        layer.msg(elem.text());
+      });
+    });
+    </script>
 </body>
 
 </html>
